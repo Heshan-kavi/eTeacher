@@ -1,13 +1,17 @@
 const express = require('express')
+const bodyParser=require('body-parser');
 const mongoose = require('mongoose')
-const router = express.Router()
+//const router = express.Router()
 const cors = require('cors')
-const bodyParser=require('body-parser')
+
 var forumController = require('./controller/forumController');
 var cmtThreadController = require('./controller/cmtThreadController');
 var replycController = require('./controller/replycController');
 var typeController = require('./controller/typeController');
-const app = express()
+var app = express()
+
+app.use(bodyParser.json({ limit: "200mb" }))
+app.use(cors())
 const path = require('path');
 const passport = require('passport');
 
@@ -16,6 +20,7 @@ const user = require('./routes/users')
 const booking = require('./routes/bookings')
 
 const PORT = 3000;
+const UserRouter = require('./api/user')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -43,22 +48,22 @@ app.listen(PORT, () => {
   console.log('Example app listening on port ' + PORT)
 });
 
-app.use('/forums', forumController);
-app.use('/comments', cmtThreadController);
-app.use('/replyComments', replycController);
+app.use('/forums',forumController);
+app.use('/comments',cmtThreadController);
+app.use('/replyComments',replycController);
 app.use('/type', typeController);
 
 
 
 // create the db constant to connect
-const db = "mongodb+srv://Eteacher:" + "Eteacher" + "@eteacher-vx2cz.mongodb.net/E-teacher?retryWrites=true&w=majority"
+const db = "mongodb://localhost:27017/"
 
 //setup cors
 
 //connect to the database
 mongoose.connect(db, {
   useNewUrlParser: true
-}, err => {
+,useUnifiedTopology: true}, err => {
   if (err) {
     console.error('Error!' + err)
   } else {
@@ -86,5 +91,7 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
     }
   });
 }));
+
+app.use('/users', UserRouter)
 
 module.exports = router
