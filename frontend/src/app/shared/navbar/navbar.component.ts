@@ -10,7 +10,6 @@ import {UserService} from '../../services/user.service'
 import {SearchService } from 'app/services/search.service';
 
 
-
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -125,7 +124,7 @@ export class NavbarComponent implements OnInit {
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         // console.log(html);
-        // this.toggleButton.classList.remove('toggled');
+        this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
     };
@@ -166,7 +165,7 @@ export class NavbarComponent implements OnInit {
 
     logoutUser(){
     this.userService.logout();
-    this.router.navigate(['/login']);
-        return false;
+        this.router.navigate(['/login']);
+ 
     }
 }
