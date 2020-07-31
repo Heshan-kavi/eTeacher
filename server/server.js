@@ -95,4 +95,3 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 app.use('/users', UserRouter)
 
 module.exports = router
-//module.exports = router
