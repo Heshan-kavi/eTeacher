@@ -1,17 +1,13 @@
 const express = require('express')
-const bodyParser=require('body-parser');
 const mongoose = require('mongoose')
 const router = express.Router()
 const cors = require('cors')
-
+const bodyParser=require('body-parser')
 var forumController = require('./controller/forumController');
 var cmtThreadController = require('./controller/cmtThreadController');
 var replycController = require('./controller/replycController');
 var typeController = require('./controller/typeController');
-var app = express()
-
-app.use(bodyParser.json({ limit: "200mb" }))
-app.use(cors())
+const app = express()
 const path = require('path');
 const passport = require('passport');
 
@@ -90,3 +86,5 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
     }
   });
 }));
+
+module.exports = router
