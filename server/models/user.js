@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer')
+const crypto =require('crypto')
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
@@ -63,6 +64,11 @@ module.exports.passwordCheck = function(plainpassword, hash, callback) {
     });
 
 }
+// const token=crypto.randomBytes(20).toLocaleString('hex')
+// user.update({
+//     resetPasswordToken:token,
+//     resetPasswordExpires:Date.now + 36000,
+// })
 module.exports.sendEmail = function(email, callback) {
     const link = "http://localhost:4200/updatepassword?email="+email;
     const mailOptions = {
