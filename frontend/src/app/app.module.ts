@@ -104,6 +104,8 @@ import {MyForumFilterPipe} from 'app/services/filters/myForumFilter.pipe';
     TeacherbookingsComponent,
     BookingdetailteacherComponent,
     BookingdetailuserComponent,
+    PasswordresetComponent,
+    UpdatepasswordComponent,
     MyFilterPipe,
     CheckForumTypeDirective,
     MyThreadFilterPipe,
