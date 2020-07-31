@@ -29,6 +29,8 @@ import { TeacherbookingsComponent } from './components/bookings/teacherbookings/
 import { UserbookingsComponent } from './components/bookings/userbookings/userbookings.component';
 import { BookingdetailteacherComponent } from './components/bookings/bookingdetailteacher/bookingdetailteacher.component';
 import { BookingdetailuserComponent } from './components/bookings/bookingdetailuser/bookingdetailuser.component';
+import { PasswordresetComponent } from './components/password/passwordreset/passwordreset.component';
+import { UpdatepasswordComponent } from './components/password/updatepassword/updatepassword.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
