@@ -42,7 +42,7 @@ li {
 .user-message-sender {
     margin-top: 10px;
     width: 90%;
-    border-color: #fd4608;
+    border-color: #fd9b08;
     border-style: solid;
     border-radius: 20px;
     border-width: 3px;
@@ -72,11 +72,11 @@ li {
     text-align: center;
     border: gray;
     border-radius: 10px;
-    background-color: #fd4608;
+    background-color: #fd9b08;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
-    right: 0px;
+    right: 440px;
     margin: 20px;
 }
 

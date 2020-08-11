@@ -15,7 +15,7 @@ export class ViewComplainsComponent implements OnInit {
   ngOnInit(): void {
     this.admin.getAllComplains().subscribe(result =>{
       this.complains = result
-      console.log(result)
+      // console.log(result)
     }),err =>{
       console.log(err)
     }

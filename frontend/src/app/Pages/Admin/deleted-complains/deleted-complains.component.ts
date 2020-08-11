@@ -15,7 +15,7 @@ export class DeletedComplainsComponent implements OnInit {
   ngOnInit(): void {
     this.admin.getDelComplains().subscribe(result =>{
       this.delComplains = result
-      console.log(result)
+      // console.log(result)
     }),err =>{
       console.log(err)
     }

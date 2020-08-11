@@ -109,7 +109,7 @@ export class AdminChartsComponent implements OnInit {
       }
     }
     // this.complainTypes[index]= complains.length;
-    console.log(this.complainTypes)
+    // console.log(this.complainTypes)
   }
 
   printData(){

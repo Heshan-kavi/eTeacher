@@ -42,7 +42,7 @@ li {
 .user-message-sender {
     margin-top: 10px;
     width: 90%;
-    border-color: #fd9b08;
+    border-color: #f96535;
     border-style: solid;
     border-radius: 20px;
     border-width: 3px;
@@ -72,7 +72,7 @@ li {
     text-align: center;
     border: gray;
     border-radius: 10px;
-    background-color: #fd9b08;
+    background-color: #fd4608;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
@@ -87,7 +87,7 @@ li {
     text-align: center;
     border: gray;
     border-radius: 10px;
-    background-color: #fd9b08;
+    background-color: #fd4608;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
@@ -102,7 +102,7 @@ li {
     text-align: center;
     border: gray;
     border-radius: 10px;
-    background-color: #fd9b08;
+    background-color: #fd0808;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
@@ -134,7 +134,7 @@ li {
     text-align: center;
     border: gray;
     border-radius: 10px;
-    background-color: #fd0808;
+    background-color: #fd9b08;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
