@@ -54,6 +54,7 @@ export class SchedulerComponent {
         dow: [1, 2, 3, 4, 5]
       },
     };
+    const user=localStorage.getItem('user');
 
     this.bookingService.getBookings().subscribe(res => {
       console.log(res[2].date)
@@ -132,7 +133,6 @@ export class SchedulerComponent {
 
   handleDateClick(event) {
     let da=event.date
-    let user=localStorage.getItem('user');
     this.timebook = ((event.date).toTimeString()).split(' ')[0];
     const currdate: Date = new Date();
     if (currdate <= event.date) {  // back date validation
@@ -142,14 +142,14 @@ export class SchedulerComponent {
       let date2 = new Date();
       date2 = event.date;
 
-      if (!this.booking) {
+      if (!this.booking.studentid) {
         const booking = {
           _id:'',
           date: date1,
           start: da,
           endtime: date2,
           //subject:teacher.subject,
-          studentid: 'lasith',    //user.id
+          studentid: "lasith",    //user.id
           teacherid: 'kasun',     //parameter value
           status: 'pending',
 
@@ -158,8 +158,8 @@ export class SchedulerComponent {
       } else {
         const booking = {
           _id: this.booking._id,
-          date: da,
-          start: event.date,
+          date: date1,
+          start: da,
           endtime: date2,
           //subject:this.booking.subject,
           studentid: this.booking.studentid,
@@ -167,14 +167,11 @@ export class SchedulerComponent {
           status: 'pending',
 
         }
-        this.updateBookingEvent(booking)
-        // if (confirm('Would you like to update your booking to ' + event.dateStr + ' ?')) {
-        //   this.bookingService.updateBooking(booking).subscribe(res => {
-        //   })
+        this.updateBooking(booking)
 
       }
       
-
+      console.log(this.booking)
     }else{
       if (confirm('Back Date !')) {}
     }

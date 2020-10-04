@@ -23,8 +23,8 @@ export class UserbookingsComponent implements OnInit {
 
   conpage:number
   penpage:number
-  conpageSize: number;
-  penpageSize: number;
+  con:any;
+  pen:any;
   confirmsize:number=0;
   pendingsize:number=0;
   showModal: boolean;
@@ -47,8 +47,8 @@ export class UserbookingsComponent implements OnInit {
 
     this.conpage=1 
     this.penpage=1
-    this.conpageSize=10
-    this.penpageSize=10
+    this.con=[]
+    this.pen=[]
     this.bookingService.getBookingbystudentId(studentId).subscribe(res => {
       
       this.bookings=res
@@ -57,10 +57,12 @@ export class UserbookingsComponent implements OnInit {
         if (this.bookings[i].status == "pending") {
           this.bookings[i].color = '#6180fa'
           this.pendingsize += 1;
+          this.pen.push(this.bookings[i]);
 
         } else if (this.bookings[i].status == "confirm") {
           this.bookings[i].color = '#ffee52'
           this.confirmsize+=1;
+          this.con.push(this.bookings[i]);
         }
         this.calendarEvents = res
       }

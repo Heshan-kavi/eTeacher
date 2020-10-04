@@ -47,7 +47,9 @@ router.post("/login", function(req, res) {
                         id: user._id,
                         name: user.name,
                         username: user.username,
-                        email: user.email
+                        email: user.email,
+                        teacherFlag: user.teacherFlag,
+                        studentFlag: user.studentFlag
                     }
                 })
             }

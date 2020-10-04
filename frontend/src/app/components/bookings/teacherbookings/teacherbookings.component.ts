@@ -27,8 +27,8 @@ export class TeacherbookingsComponent implements OnInit {
   
   conpage: number
   penpage: number
-  conpageSize: number;
-  penpageSize: number;
+  con:any
+  pen:any;
   confirmsize: number = 0;
   pendingsize: number = 0;
   calendarVisible = true;
@@ -44,8 +44,8 @@ export class TeacherbookingsComponent implements OnInit {
     const teacherId="kasun"     //user.id
     this.conpage = 1
     this.penpage = 1
-    this.conpageSize = 10
-    this.penpageSize = 10
+    this.con = []
+    this.pen = []
     this.bookingService.getBookingbyteacherId(teacherId).subscribe(res => {
       for (var i in res) {
         this.bookings.push(res[i])
@@ -55,15 +55,17 @@ export class TeacherbookingsComponent implements OnInit {
         if (this.bookings[j].status == "pending") {
           this.bookings[j].color = '#6180fa'
           this.pendingsize += 1;
+          this.pen.push(this.bookings[j]);
+          
 
         } else if (this.bookings[j].status == "confirm") {
           this.bookings[j].color = '#ffee52'
           this.confirmsize += 1;
+          this.con.push(this.bookings[j]);
         }
         this.calendarEvents=res
       }
-      console.log(this.confirmsize)
-
+      console.log(this.bookings)
     })
 
     let date1 = JSON.stringify(this.today)

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  getusers(): Observable<any>{
+    return this.http.get('http://localhost:3000/users')
+  }
 
   user: any;
   authtoken:any;
@@ -45,7 +49,8 @@ export class UserService {
   logout() {
     this.authtoken = null;
     this.user = null;
-    localStorage.clear(); 
+    localStorage.clear();
+    console.clear();
   }
 
   resetPassword(user) {

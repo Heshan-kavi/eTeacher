@@ -38,11 +38,8 @@
                                 <th></th>
                             </tr>
                             <ng-container *ngFor="
-                let booking of bookings
-                  | slice
-                    : (conpage - 1) * conpageSize
-                    : (conpage - 1) * conpageSize + conpageSize
-              ">
+                            let booking of con
+                            | paginate: { itemsPerPage: 10, currentPage: conpage }">
                                 <tr *ngIf="booking.status == 'confirm'">
                                     <td>{{ booking.date }}</td>
                                     <td>{{ booking.start | date: "shortTime" }}</td>
@@ -56,7 +53,7 @@
                                 </tr>
                             </ng-container>
                         </table>
-                        <ngb-pagination [collectionSize]="confirmsize" [(page)]="conpage" aria-label="Default pagination" [pageSize]="conpageSize">
+                        <ngb-pagination [collectionSize]="confirmsize" [(page)]="conpage" aria-label="Default pagination" [pageSize]=10>
                         </ngb-pagination>
                     </ng-template>
                 </ngb-tab>
@@ -72,12 +69,9 @@
                             </tr>
 
                             <ng-container *ngFor="
-                let booking of bookings
-                  | slice
-                    : (penpage - 1) * penpageSize
-                    : (penpage - 1) * penpageSize + penpageSize
-              ">
-                                <tr *ngIf="booking.status == 'pending'">
+                            let booking of pen
+                            | paginate: { itemsPerPage: 10, currentPage: penpage }">
+                                <tr >
                                     <td>{{ booking.date }}</td>
                                     <td>{{ booking.start | date: "shortTime" }}</td>
                                     <td>{{ booking.subject }}</td>
@@ -90,7 +84,7 @@
                                 </tr>
                             </ng-container>
                         </table>
-                        <ngb-pagination [collectionSize]="pendingsize" [(page)]="penpage" aria-label="Default pagination" [pageSize]="penpageSize">
+                        <ngb-pagination [collectionSize]="pendingsize" [(page)]="penpage" aria-label="Default pagination" [pageSize]=10>
                         </ngb-pagination>
                     </ng-template>
                 </ngb-tab>
