@@ -36,8 +36,9 @@
         <div class="modal-footer">
           <div *ngIf="booking.status!='confirm'">
             <button type="button" (click)="confirmBooking(booking)" class="btn btn-primary">Confirm</button>
+            <button type="button" (click)="CancelBookingEvent(booking)" class="btn btn-warning">Cancel</button>
           </div>
-          <button type="button" (click)="deleteBookingEvent(booking)" class="btn btn-warning">Cancel</button>
+          
           <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>
         </div>
 
@@ -47,14 +48,14 @@
 </div>
 
 
-  <div class="modal" id="deleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" >
+  <div class="modal" id="deleteModal" [style.display]="showCancelModal ? 'block' : 'none'" >
     <div class="modal-dialog" >
       <div class="modal-content">
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Delete Booking</h4>
-          <button type="button" class="close" data-dismiss="modal" (click)="hidedelete()">&times;</button>
+          <h4 class="modal-title">Cancel Booking</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="hideCancel()">&times;</button>
         </div>
 
         <!-- Modal body -->
@@ -64,8 +65,8 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="deleteBooking(booking)">Yes</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hidedelete()">Cancal</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="cancelBooking(booking)">Yes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideCancel()">Close</button>
         </div>
 
       </div>

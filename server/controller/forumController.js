@@ -7,7 +7,7 @@ var {Forum} = require('../model/forumModel');
 var {Type} = require('../model/forumType');
 router.route('/')
 .get((req,res)=>{
-    Forum.find((err,docs)=>{
+    Forum.find({},'title type timeAgo timestamps owner views replies',(err,docs)=>{
     if(!err){res.send(docs);}
      else{console.log('Error in retriving Threds :'+JSON.stringify(err,undefined,2));
     }
@@ -24,7 +24,8 @@ router.route('/')
         owner : req.body.owner,
         timeAgo: req.body.timeAgo,
         votes : req.body.votes,
-        replies : req.body.replies
+        replies : req.body.replies,
+        status : req.body.status
     });
     console.log(req.body.body)
     emp.save((err,doc)=>{
@@ -57,15 +58,17 @@ router.route('/type')
     .catch((err) => next(err));
 });
 router.route('/:id')
-.get((req,res)=>{
-    Forum.findById(req.params.id,(err,doc)=>{
-        if(!err){
-            res.send(doc)
-        }
-        else{
+.get((req,res,next)=>{
+    Forum.findById(req.params.id)
+    .populate('owner')
+    .then((thread)=>{
+        if(thread!=null){
+            res.send(thread)
+        }else{
             console.log('Error in retriving Employees :'+JSON.stringify(err,undefined,2))
         }
-    });
+    },(err) => next(err))
+    .catch((err) => next(err));
 })
 .post((req,res)=>{
     Forum.findById(req.params.id)
@@ -80,7 +83,7 @@ router.route('/:id')
     },(err) => next(err))
     .catch((err) => next(err));
 })
-.put((req,res)=>{
+.put((req,res,next)=>{
     if(!objectId.isValid(req.params.id))
     return res.status(400).send('no recode with given id : ${req.params.id}');
     var emp = {
@@ -92,21 +95,53 @@ router.route('/:id')
         owner : req.body.owner,
         timeAgo: req.body.timeAgo,
         votes : req.body.votes,
-        replies : req.body.replies
+        replies : req.body.replies,
+        status : req.body.status
     };
-    Forum.findByIdAndUpdate(req.params.id,{$set:emp}, {new:true},(err,doc)=>{
-        if(!err){res.send(doc);}
-        else{console.log('Error in employee update :'+JSON.stringify(err,undefined,2))
-    }
-    });
-});
+    Forum.findByIdAndUpdate(req.params.id,{$set:emp}, {new:true})
+    .populate('owner')
+    .then((thread)=>{
+        if(thread!=null){
+            res.sendStatus=200;
+            res.send(thread);
+        }else{
+            console.log('Error in thread update :'+JSON.stringify(err,undefined,2))
+        }
+    },err=>next(err))
+    .catch((err)=>next(err))
+    
+    
+    
+    // ,(err,doc)=>{
+    //     if(!err){res.send(doc);}
+    //     else{console.log('Error in employee update :'+JSON.stringify(err,undefined,2))
+    // }
+    // });
+})
+
+.delete((req,res,next)=>{
+    Forum.findById(req.params.id)
+    .then((thread)=>{
+        if(thread !=null){
+            thread.remove((err,doc)=>{
+                if(!err){
+                    res.status = 200;
+                    res.send(doc)
+                }else{
+                    console.log('Error in delete this thread : '+JSON.stringify(err,undefined,2))
+                }
+            })
+        }
+    },(err) => next(err))
+    .catch((err) => next(err));
+})
 
 router.route('/:id/:voteOwner')
 .get((req,res,next)=>{
     Forum.findById(req.params.id)
     .then((vote)=>{
             var flag = -1;
-            if(vote.voteDetails != null){
+            if(vote.voteDetails[0] != null){
             for(let i in vote.voteDetails){
                 // console.log(req.params.voteOwner)
                 // console.log(vote.voteDetails[i].owner)
@@ -136,7 +171,7 @@ router.route('/:id/:voteOwner')
     .catch((err) => next(err));
 })
 router.route('/:id/vote/:voteId')
-
+ 
 .put((req,res ,next)=>{
     Forum.findById(req.params.id)
     .then((thread)=>{
@@ -155,7 +190,28 @@ router.route('/:id/vote/:voteId')
     },(err) => next(err))
     .catch((err) => next(err));
 })
-
+router.route('/type/:type')
+.delete((req,res)=>{
+    Forum.deleteMany({type:req.params.type}, (err,result)=>{
+        if(!err){
+            res.send(result);
+        }else{
+            res.send(err);
+        }
+    })
+})
+router.route('/my/search/:user')
+.get((req,res)=>{
+    // console.log(req.params.type)
+    Forum.find({owner : req.params.user},'_id title type timeAgo timestamps owner views replies', (err,doc)=>{
+        if(!err){
+            res.send(doc)
+        }
+        else{
+            console.log('Error in retriving Threads :'+JSON.stringify(err,undefined,2))
+        }
+    });
+})
 
 
 

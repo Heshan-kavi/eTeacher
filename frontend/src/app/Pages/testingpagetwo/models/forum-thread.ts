@@ -1,7 +1,8 @@
 export interface Forum {
-    id: string;
+    _id: string;
     title: string;
     body: string;
+    image:string;
     type: string;
     timestamps: Date;
     views: number;
@@ -9,4 +10,5 @@ export interface Forum {
     timeAgo:string;
     replies:number;
     votes:number;
+    status:boolean;
   }

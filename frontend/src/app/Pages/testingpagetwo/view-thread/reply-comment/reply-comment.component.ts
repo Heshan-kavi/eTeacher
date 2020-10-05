@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { replyComment } from '../../models/replyComment';
-import  { FourmServiceService } from 'app/Pages/testingpagetwo/service/fourm-service.service'
+import  { FourmServiceService } from 'app/Pages/testingpagetwo/service/fourm-service.service';
+import {Forum} from 'app/Pages/testingpagetwo/models/forum-thread';
+import * as moment from 'moment';
 
 
 @Component({
@@ -10,14 +12,31 @@ import  { FourmServiceService } from 'app/Pages/testingpagetwo/service/fourm-ser
   styleUrls: ['./reply-comment.component.css']
 })
 export class ReplyCommentComponent implements OnInit {
-  @Input('parentdocId') public paraentdocId: string;
+  @Input('Data') public commentId : string;
+  @Input('Data2') public threadId : string;
+  @Input('Data3') public commentCount : number;
+  @Input('Data4') public status : boolean;
 
-user = "Dasun Lahiru"
+
+user = JSON.parse(localStorage.getItem('user'));
 replyComments:any;
+thread : any
+replycount = 0;
+fala :any;
+allsubReplys : any;
+subReplyCount =0;
+comments : any;
+replyCount = 0;
+replies : any;
+length : number; 
+update = false;
+
   constructor(public forumService : FourmServiceService) { }
 
   ngOnInit(): void {
-  this.getReply();
+    // console.log(this.commentId)
+    // console.log(this.threadId)
+    this.getReply();
   }
 
   editorConfig: AngularEditorConfig = {
@@ -87,36 +106,110 @@ replyComments:any;
   };
 
 rComment : replyComment={
-  parentCId : this.paraentdocId,
-  owner : this.user ,
+  _id : "",
+  parentCId : this.commentId,
+  threadId : this.threadId,
+  owner : this.user.name ,
   date : new Date,
   comment : ''
 }
 
-onComment(event : replyComment){
- const rComment : replyComment={
-    parentCId : this.paraentdocId,
-    owner : this.user ,
-    date : new Date,
-    comment : event.comment
-  }
-  console.log(rComment)
-  this.forumService.setReplyComment(rComment).subscribe(()=>{
-    this.refresh();
-    this.getReply();
-  })
-}
 refresh(){
   this.rComment={
-    parentCId : this.paraentdocId,
-    owner : this.user ,
+    _id : "",
+    parentCId : this.commentId,
+    threadId : this.threadId,
+    owner : this.user.name,
     date : new Date,
     comment : ''
   }
 }
-getReply(){
-  this.forumService.getReplyComments(this.paraentdocId).subscribe((res)=>{
-    this.replyComments = res;
+
+onComment(event : replyComment){
+  if(!event._id){
+ const rComment : replyComment={
+   _id : "",
+    parentCId : this.commentId,
+    threadId : this.threadId,
+    owner : this.user.name ,
+    date : new Date,
+    comment : event.comment
+  }
+  // console.log(rComment)
+  this.forumService.setReplyComment(rComment).subscribe(()=>{
+    this.rComment.comment=''
+    this.getReply();
+    this.getAllSubreplys();
   })
+}else{
+  const updateReply = {
+    reply : event.comment
+  }
+  this.forumService.editReply(event._id,updateReply).subscribe(()=>{
+    this.refresh()
+    this.update = false;
+    this.getReply();
+  })
+ }
 }
+
+cancelEdit(){
+  this.refresh();
+  this.update = false;
+}
+
+getReply(){
+  this.forumService.getReplyComments(this.commentId).subscribe((res)=>{
+    for(let i in res){
+      res[i].date = moment(res[i].date).fromNow();
+    }
+    this.replyComments = res;
+    this.length = this.replyComments.length;
+  });
+  }
+
+getAllSubreplys(){
+    // get all replies  
+    this.forumService.getsubReplyC(this.threadId).subscribe((res)=>{
+      this.allsubReplys = res;
+      this.subReplyCount = this.allsubReplys.length;
+      // console.log(this.subReplyCount) 
+      this.forumService.getComments(this.threadId).subscribe(res=>{
+        this.comments = res;
+        this.replyCount = this.comments.length;
+      // console.log(this.replyCount)
+      this.forumService.getThread(this.threadId).subscribe((res)=>{
+        this.thread = res;
+        // console.log('initial value :',this.thread.replies)
+        this.thread.replies = 0;
+        this.thread.replies =  this.subReplyCount +  this.replyCount; 
+        // console.log(this.thread.replies);
+        this.forumService.setReplycount(this.thread).subscribe(()=>{
+          }); 
+        });  
+      });
+    });
+  }
+
+editComment(comment : any){
+  this.update = true;
+  this.rComment = {
+    _id : comment._id,
+    parentCId : comment.parentCId,
+    threadId : comment.threadId,
+    owner : comment.owner ,
+    date : comment.date,
+    comment : comment.comment
+  }
+}
+
+deleteComment(commentId : string){
+    if(confirm("Are you sure to delete this reply?")){
+      this.forumService.deleteReply(commentId).subscribe(()=>{
+        this.forumService.success("Reply is deleted Successfully");
+        this.getReply();
+        this.getAllSubreplys();
+      })
+    }
+}  
 }

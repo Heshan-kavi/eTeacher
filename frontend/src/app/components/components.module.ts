@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MatIconModule } from '@angular/material/icon';
 
 import { BasicelementsComponent } from './basicelements/basicelements.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -25,6 +27,10 @@ import { BookingdetailteacherComponent } from './bookings/bookingdetailteacher/b
 import { BookingdetailuserComponent } from './bookings/bookingdetailuser/bookingdetailuser.component';
 import { PasswordresetComponent } from './password/passwordreset/passwordreset.component';
 import { UpdatepasswordComponent } from './password/updatepassword/updatepassword.component';
+import { StudentViewComponent } from './Profiles/student-view/student-view.component';
+import { TeacherViewComponent } from './Profiles/teacher-view/teacher-view.component';
+import { StudentAccComponent } from './Profiles/student-acc/student-acc.component';
+import { TeacherAccComponent } from './Profiles/teacher-acc/teacher-acc.component';
 
 @NgModule({
     imports: [
@@ -33,7 +39,9 @@ import { UpdatepasswordComponent } from './password/updatepassword/updatepasswor
         NgbModule,
         NouisliderModule,
         RouterModule,
-        JwBootstrapSwitchNg2Module
+        JwBootstrapSwitchNg2Module,
+        NgxPaginationModule,
+        MatIconModule
     ],
     declarations: [
         ComponentsComponent,
@@ -54,7 +62,11 @@ import { UpdatepasswordComponent } from './password/updatepassword/updatepasswor
         BookingdetailteacherComponent,
         BookingdetailuserComponent,
         PasswordresetComponent,
-        UpdatepasswordComponent
+        UpdatepasswordComponent,
+        StudentViewComponent,
+        TeacherViewComponent,
+        StudentAccComponent,
+        TeacherAccComponent
     ],
     entryComponents: [NgbdModalContent],
     exports:[ ComponentsComponent ]

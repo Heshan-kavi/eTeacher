@@ -1,44 +1,123 @@
-<nav *ngIf="path!=='/login' && path!=='/register' && path!=='/passwordreset' && path!=='/updatepassword'" class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav *ngIf="path!=='/login' && path!=='/register' && path!=='/passwordreset' && path!=='/updatepassword' && user" class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-    <div class="navbar-collapse collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/newbooking">New Booking</a>
-            </li>
-            <li class="nav-item">
-                <!-- <div *ngIf="user.status=='Teacher'"> -->
-                <a class="nav-link" href="#" routerLink="/teacherbooking">Teacher Booking</a>
-                <!-- </div>
-                <div *ngIf="user.status=='Student'"> -->
-                <a class="nav-link" href="#" routerLink="/userbooking">User Booking</a>
-                <!-- </div> -->
-
-            </li>
-            <!-- <div *ngIf="!user"> -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" (click)="logoutUser()">Logout</a>
-            </li>
-
-
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+  <div class="navbar-collapse collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item" *ngIf="user.teacherFlag==true" >
+        <a class="nav-link" href="#"  routerLink="/teacherbooking">My Bookings</a>
+      </li>
+      <li class="nav-item" *ngIf="user.studentFlag==true" >
+        <a class="nav-link" href="#"  routerLink="/userbooking">My Bookings</a>
+    </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/newbooking">Calandar</a>
+      </li>
+      <!-- <div *ngIf="!user"> -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logoutUser()" routerLink="logoutUser()">Logout</a>
+        </li>
+        <div class="container">
+         
+            <div class="row">
+              <div [formGroup]="this.searchService.searchInput" class="input-group">
+              <input class="form-control" type="text" formControlName = "search" [(ngModel)]="searchKey" placeholder="{{searchBar}}" #p="ngbPopover"  (keyup)="onKey($event,p)" 
+              triggers="manual" placement="bottom-right"   [autoClose]="'outside'"  [ngbPopover]="popContent"/>
+              <div class="input-group-append">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle> </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="height: 200px; width: 175px;" >
+                    <span><strong>What are you looking for?</strong></span>
+                    <hr>
+                    <button ngbDropdownItem (click)="teachers()">Teachers</button>
+                    <button ngbDropdownItem (click)="students()">Students</button>
+                    <button ngbDropdownItem (click)="forums(user.id)">Forums</button>
+                  </div>
+                </div>
+             </div>
+            </div>
+        
+    
+            </div>
+         </div>
+      
+    </ul>
     </div>
+
+ 
 </nav>
+
+<ng-template #popContent>
+ <h3><strong>Search Results</strong></h3>
+ <div class="scrol">
+   <!-- all search results -->
+   <mat-card *ngIf="!tearcherOn && !studentOn && !forumOn">
+     <mat-card-title> Scroll and find results! </mat-card-title>
+     <mat-card-content>
+       Not implement yet
+     </mat-card-content>
+   </mat-card>
+
+  <!-- search results for teschers -->
+  <mat-card *ngIf="tearcherOn">
+      <mat-card-subtitle>Teachers</mat-card-subtitle>
+      <mat-card-content >   
+            <div class="container-fluid">
+             
+              <mat-list *ngFor="let prop of child | myfilter:searchKey">                 
+                <mat-list-item>{{prop.owner}} -<button type="button" class="btn btn-primary">view</button>
+                  <button  type="button" class="btn btn-success">massage</button></mat-list-item>
+                <mat-divider></mat-divider>
+              </mat-list>             
+            </div>
+      </mat-card-content>
+      <ng-template [ngIf]="(child | myfilter:searchKey)?.length == 0">
+        <p>No items found!</p>
+      </ng-template>      
+  </mat-card>
+  <!-- search results for forums  -->
+  <mat-card *ngIf="forumOn">
+    <mat-card-title>
+      Forums
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <div class="row" *ngFor="let prop of forumTypes | myForumfilter:searchKey">
+          <mat-list-item>{{prop.type}} -<button type="button" class="btn btn-primary" (click)="gotoForum(prop.type)" >view</button></mat-list-item>
+          <mat-divider></mat-divider>
+        </div>                         
+      </mat-list>
+      <ng-template [ngIf]=" (forumTypes | myForumfilter:searchKey)?.length == 0 " >
+        No forums find!
+      </ng-template>  
+    </mat-card-content>
+    <br>
+    <mat-card-title>Your Threads</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <div class="row" *ngFor="let prop of forumThreads | myThreadfilter:searchKey">
+          <mat-list-item> Thread title -{{prop.title}} -<button type="button" class="btn btn-primary" (click)="gotoThread(prop.type,prop._id)" >view</button></mat-list-item>
+          <mat-divider></mat-divider>
+        </div>                         
+      </mat-list>
+      <ng-template [ngIf]=" (forumThreads | myThreadfilter:searchKey)?.length == 0 " >
+        your threads not found!
+      </ng-template>  
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+
+</ng-template>
