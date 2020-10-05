@@ -49,6 +49,7 @@ router.get('/booking', function (req, res) {
                 console.log("Error retrieving")
             } else {
                 res.json(booking);
+               
             }
         });
 });
@@ -78,7 +79,6 @@ router.get('/bookingbydateteacher', function (req, res) {
             console.log("Error retrieving")
         } else {
             res.json(bookings);
-            
         }
       });
       

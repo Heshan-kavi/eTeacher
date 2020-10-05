@@ -96,7 +96,7 @@ import {MyForumFilterPipe} from 'app/services/filters/myForumFilter.pipe';
     ViewThreadComponent,
     ReplyCommentComponent,
     ForumTypeComponent,
-    // SchedulerComponent,
+    SchedulerComponent,
     RegisterComponent,
     LoginComponent,
     ProfileComponent,

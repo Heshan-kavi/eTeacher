@@ -19,7 +19,7 @@ import {SearchService } from 'app/services/search.service';
 export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
-    user = JSON.parse(localStorage.getItem('user'))
+    user=JSON.parse(localStorage.getItem('user'));
     child : any;
     path='';
     searchControl = this.searchService.searchInput.controls;
@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit {
         this.forumService.getAll().subscribe( res=>{
             this.child = res;
           });
-         
+        console.log(this.user)
     }
     onKey( event, p : NgbPopover): void {
         console.log(event.target.value);
@@ -124,7 +124,7 @@ export class NavbarComponent implements OnInit {
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         // console.log(html);
-        this.toggleButton.classList.remove('toggled');
+        // this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
     };
@@ -164,8 +164,8 @@ export class NavbarComponent implements OnInit {
 
 
     logoutUser(){
-    this.userService.logout();
+        this.userService.logout();
         this.router.navigate(['/login']);
- 
     }
+
 }

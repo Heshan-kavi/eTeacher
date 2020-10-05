@@ -32,6 +32,8 @@ const userSchema = new schema({
     password: { type: String, require: true },
     teacherFlag:Boolean,
     studentFlag:Boolean
+    teacherFlag:{ type:Boolean,require:true},
+    studentFlag:{type:Boolean,require:true}
 
 
 });
