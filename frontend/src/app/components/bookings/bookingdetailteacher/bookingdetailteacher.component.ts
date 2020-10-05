@@ -12,7 +12,7 @@ import { BookingService } from 'app/services/booking.service';
 export class BookingdetailteacherComponent implements OnInit {
   @Input() booking: Bookings;
   showViewModal: boolean;
-  showDeleteModal:boolean=false;
+  showCancelModal:boolean=false;
   editTitle: boolean = false;
   updateBookingEvent = new EventEmitter();
   messege:String=""
@@ -54,13 +54,13 @@ export class BookingdetailteacherComponent implements OnInit {
     this.showViewModal = false;
   }
 
-  deleteBookingEvent(booking) {
+  CancelBookingEvent(booking) {
 
-    this.showDeleteModal=true;
+    this.showCancelModal=true;
   }
 
-  deleteBooking(booking) {
-    this.showDeleteModal = false;
+ cancelBooking(booking) {
+    this.showCancelModal = false;
     const cancel= {
       _id: booking._id,
       date: booking.date,
@@ -81,7 +81,7 @@ export class BookingdetailteacherComponent implements OnInit {
     this.messege ="Warning";
     this.showViewModal = false;
   }
-  hidedelete() {
-    this.showDeleteModal=false;
+  hideCancel() {
+    this.showCancelModal=false;
   }
 }

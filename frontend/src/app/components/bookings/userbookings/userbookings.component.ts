@@ -35,15 +35,14 @@ export class UserbookingsComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[]
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  user=JSON.parse(localStorage.getItem('user'));
   @Output() SelectedBooking = new EventEmitter();
   
   constructor(private bookingService: BookingService,) { }
 
   ngOnInit(): void {
     let user=localStorage.getItem('user')
-    const studentId="lasith"      //user.id
-    const date="2020-06-11"
-    
+    const studentId=this.user.name     //user.id
 
     this.conpage=1 
     this.penpage=1

@@ -35,13 +35,13 @@ export class TeacherbookingsComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[]
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-  
+  user=JSON.parse(localStorage.getItem('user'));
   constructor(private bookingService:BookingService,) { }
 
   ngOnInit(): void {
     let user=localStorage.getItem('user');
     this.bookings=[]
-    const teacherId="kasun"     //user.id
+    const teacherId=this.user.name     //user.id
     this.conpage = 1
     this.penpage = 1
     this.con = []

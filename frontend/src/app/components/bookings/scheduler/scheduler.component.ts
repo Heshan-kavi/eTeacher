@@ -18,6 +18,7 @@ import { Bookings } from '../../../models/bookings'
 
 export class SchedulerComponent {
   @Input() booking: Bookings;
+  @Input() teacher:any;
   bookings: Array<Bookings>;
   showModal: boolean;
   bookingModal = false;
@@ -32,7 +33,7 @@ export class SchedulerComponent {
   timebook: any;
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-
+  user=JSON.parse(localStorage.getItem('user'));
   constructor(private bookingService: BookingService, private router: Router) { }
   toggleVisible() {
     this.calendarVisible = !this.calendarVisible;
@@ -149,7 +150,7 @@ export class SchedulerComponent {
           start: da,
           endtime: date2,
           //subject:teacher.subject,
-          studentid: "lasith",    //user.id
+          studentid: this.user.name,    //user.id
           teacherid: 'kasun',     //parameter value
           status: 'pending',
 
