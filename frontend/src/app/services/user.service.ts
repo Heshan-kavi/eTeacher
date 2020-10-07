@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable} from 'rxjs/Observable';
 import { Http, Headers } from '@angular/http';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
@@ -9,14 +7,10 @@ import 'rxjs/add/operator/map'
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private http : HttpClient) { }
   getusers(): Observable<any>{
     return this.http.get('http://localhost:3000/users')
   }
 
-  getusers(): Observable<any>{
-    return this.http.get<any>('http://localhost:3000/users')
-  }
   user: any;
   authtoken:any;
   constructor(private http: Http) { }
@@ -71,3 +65,4 @@ export class UserService {
     return this.http.put('http://localhost:3000/user/updatepassword' + user.email, user, { headers: headers })
   }
 }
+

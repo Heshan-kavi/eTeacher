@@ -3,13 +3,15 @@
 </div>
 <div class='app' style="padding-left: 10%;padding-right: 10%;">
     Pending : 
-    <input style="background-color:'#6180fa' ;border: 0ch;" readonly=true>&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; Confirm : <input style="background-color:'#ffee52' ;border: 0ch;" readonly=true>
+    <input style="background-color:#6180fa; border: 0ch;" readonly=true>&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; 
+    Confirm : 
+    <input style="background-color:#ffee52 ;border: 0ch;" readonly=true>
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
     Not Available : 
-    <input style="background-color:'#63615a' ;border: 0ch;" readonly=true>
+    <input style="background-color:#3a3937 ;border: 1ch;" readonly=true>
     <div style="border-radius: 15px ; margin-top:50px">
         <full-calendar 
-        style="border: black; border-width: thin;" 
+        style="border: black; border-width: 2px;" 
         #calendar defaultView="dayGridMonth" 
         [plugins]="calendarPlugins" 
         theme="true" 
@@ -84,7 +86,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addBooking(booking)">Yes</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal" (click)="addBooking(booking)">Yes</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Cancel</button>
             </div>
 

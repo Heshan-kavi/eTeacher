@@ -36,6 +36,9 @@
                 <a href="#" class="btn btn-link btn-danger" routerLink="/register">Register</a>
                 <small routerLink="/passwordreset">Forget Password</small>
             </fieldset>
+            <div class="error-msg" *ngIf="alert==true">
+                <ngb-alert [dismissible]="false" type="warning">{{Message}}</ngb-alert>
+            </div>
         </form>
     </div>
 </div>

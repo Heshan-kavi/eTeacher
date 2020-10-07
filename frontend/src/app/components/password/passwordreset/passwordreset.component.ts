@@ -18,9 +18,8 @@ export class PasswordresetComponent implements OnInit {
         email: this.email,
       }
       this.userService.resetPassword(user).subscribe(res => {
-        if (res.state) {
-         
-          this.router.navigate(['/home']);
+        if (!res.state) {
+          this.router.navigate(['/passwordreset']);
         } else {
           this.router.navigate(['/login']);
         }

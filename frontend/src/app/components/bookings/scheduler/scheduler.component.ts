@@ -55,24 +55,42 @@ export class SchedulerComponent {
         dow: [1, 2, 3, 4, 5]
       },
     };
-    const user=localStorage.getItem('user');
+    
 
-    this.bookingService.getBookings().subscribe(res => {
-      console.log(res[2].date)
-      let i;
-      for (i = 0; i < res.length; i++) {
-        if (res[i].status == 'pending') {
-          res[i].color = '#6180fa'
-
-        } else if (res[i].status == 'confirm') {
-          res[i].color = '#ffee52'
+    if(this.user.studentFlag==true){
+      this.bookingService.getBookingbystudentId(this.user.name).subscribe(res => {
+        let i;
+        for (i = 0; i < res.length; i++) {
+          if (res[i].status == 'pending') {
+            res[i].color = '#6180fa'
+  
+          } else if (res[i].status == 'confirm') {
+            res[i].color = '#ffee52'
+          }
+         else if (res[i].status == 'notavilable') {
+            res[i].color = '#63615a'
         }
-       else if (res[i].status == 'notavilable') {
-          res[i].color = '#63615a'
-      }
-        this.calendarEvents = res
-      }
-    })
+          this.calendarEvents = res
+        }
+      })
+    }else if(this.user.teacherFlag==true){
+      this.bookingService.getBookingbyteacherId(this.user.name).subscribe(res => {
+        let i;
+        for (i = 0; i < res.length; i++) {
+          if (res[i].status == 'pending') {
+            res[i].color = '#6180fa'
+  
+          } else if (res[i].status == 'confirm') {
+            res[i].color = '#ffee52'
+          }
+         else if (res[i].status == 'notavilable') {
+            res[i].color = '#63615a'
+        }
+          this.calendarEvents = res
+        }
+      })
+    }
+
   }
 
   toggleWeekends() {
@@ -143,13 +161,13 @@ export class SchedulerComponent {
       let date2 = new Date();
       date2 = event.date;
 
-      if (!this.booking.studentid) {
+      if (!this.booking) {
         const booking = {
           _id:'',
           date: date1,
           start: da,
           endtime: date2,
-          //subject:teacher.subject,
+          subject:"Maths",
           studentid: this.user.name,    //user.id
           teacherid: 'kasun',     //parameter value
           status: 'pending',
@@ -162,7 +180,7 @@ export class SchedulerComponent {
           date: date1,
           start: da,
           endtime: date2,
-          //subject:this.booking.subject,
+          subject:this.booking.subject,
           studentid: this.booking.studentid,
           teacherid: this.booking.teacherid,
           status: 'pending',

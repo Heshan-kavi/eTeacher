@@ -4,22 +4,7 @@ const mongoose = require('mongoose')
  * Data model for User.
  */
 
-const Schema = mongoose.Schema
-const userSchema = new Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        createIndex: true,
-        required: true,
-        auto: true
-    },
-    name : {type : String},
-    age : {type : Number},
-    teacherFlag : {type : Boolean, auto : true},
-    studentFlag : {type : Boolean, auto : true}
 
-})
-module.exports = mongoose.model('User', userSchema)
-=======
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer')
 const crypto =require('crypto')
@@ -31,7 +16,7 @@ const userSchema = new schema({
     email: { type: String, require: true },
     password: { type: String, require: true },
     teacherFlag:Boolean,
-    studentFlag:Boolean
+    studentFlag:Boolean,
     teacherFlag:{ type:Boolean,require:true},
     studentFlag:{type:Boolean,require:true}
 
@@ -85,7 +70,7 @@ module.exports.passwordCheck = function(plainpassword, hash, callback) {
         if (res) {
             callback(null, res);
         }
-        console.log(err)
+        
     });
 
 }

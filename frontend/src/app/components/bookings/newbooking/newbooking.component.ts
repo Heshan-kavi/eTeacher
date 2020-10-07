@@ -33,6 +33,7 @@ export class NewbookingComponent implements OnInit {
     this.calendarVisible = !this.calendarVisible;
   }
   calendarPlugins = [dayGridPlugin,timeGrigPlugin, interactionPlugin];
+  user=JSON.parse(localStorage.getItem('user'));
 
   constructor(private users:UserService,private router:Router) { }
   @ViewChild('calendar', { static: false }) calendarComponent: FullCalendarComponent; // the #calendar in the template  

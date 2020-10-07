@@ -34,25 +34,24 @@ export class UserbookingsComponent implements OnInit {
   calendarVisible = true;
   calendarWeekends = true;
   calendarEvents: EventInput[]
-  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];  //calender views
   user=JSON.parse(localStorage.getItem('user'));
-  @Output() SelectedBooking = new EventEmitter();
+  @Output() SelectedBooking = new EventEmitter();  //take selected booking as output paramter
   
-  constructor(private bookingService: BookingService,) { }
+  constructor(private bookingService: BookingService,) { }    // initiate booking service
 
   ngOnInit(): void {
-    let user=localStorage.getItem('user')
-    const studentId=this.user.name     //user.id
+    const studentId=this.user.name    //init method
 
     this.conpage=1 
     this.penpage=1
     this.con=[]
     this.pen=[]
-    this.bookingService.getBookingbystudentId(studentId).subscribe(res => {
+    this.bookingService.getBookingbystudentId(studentId).subscribe(res => {       //call booking sevice andget bookings of student
       
       this.bookings=res
       var i;
-      for (i = 0; i < this.bookings.length; i++) {
+      for (i = 0; i < this.bookings.length; i++) {            //divide bookings accoiding to states and store seperae arrayss
         if (this.bookings[i].status == "pending") {
           this.bookings[i].color = '#6180fa'
           this.pendingsize += 1;
@@ -65,7 +64,6 @@ export class UserbookingsComponent implements OnInit {
         }
         this.calendarEvents = res
       }
-      console.log(this.confirmsize)
       
     })
 

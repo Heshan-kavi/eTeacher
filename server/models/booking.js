@@ -7,6 +7,7 @@ const bookingSchema = new schema({
     endtime: { type: String, require: true },
     studentid: { type: String, require: true },
     teacherid: { type: String, require: true },
+    subject: { type: String, require: true },
     status: { type: String, require: true }
     
 

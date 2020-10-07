@@ -32,10 +32,10 @@ export class AppComponent implements OnInit {
             const number = window.scrollY;
             if (number > 150 || window.pageYOffset > 150) {
                 // add logic
-                navbar.classList.remove('navbar-transparent');
+                // navbar.classList.remove('navbar-transparent');
             } else {
                 // remove logic
-                navbar.classList.add('navbar-transparent');
+                // navbar.classList.add('navbar-transparent');
             }
         });
         var ua = window.navigator.userAgent;

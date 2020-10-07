@@ -11,6 +11,7 @@ router.post("/newbooking", function (req, res) {
         date: req.body.date,
         start: req.body.start,
         endtime: req.body.endtime,
+        subject:req.body.subject,
         studentid: req.body.studentid,
         teacherid: req.body.teacherid,
         status: req.body.status
@@ -139,6 +140,7 @@ router.put('/editbooking:id', function (req, res) {
                 endtime: req.body.endtime,
                 studentid: req.body.studentid,
                 teacherid: req.body.teacherid,
+                subject:req.body.subject,
                 status: req.body.status
             }
 

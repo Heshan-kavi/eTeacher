@@ -39,7 +39,6 @@ export class TeacherbookingsComponent implements OnInit {
   constructor(private bookingService:BookingService,) { }
 
   ngOnInit(): void {
-    let user=localStorage.getItem('user');
     this.bookings=[]
     const teacherId=this.user.name     //user.id
     this.conpage = 1
@@ -65,7 +64,6 @@ export class TeacherbookingsComponent implements OnInit {
         }
         this.calendarEvents=res
       }
-      console.log(this.bookings)
     })
 
     let date1 = JSON.stringify(this.today)
