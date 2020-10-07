@@ -11,7 +11,9 @@ router.post("/register", function(req, res) {
         name: req.body.name,
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        teacherFlag:false,
+        studentFlag:true
     });
 
     User.saveUser(newUser, function(err, user) {
@@ -38,6 +40,7 @@ router.post("/login", function(req, res) {
         }
         User.passwordCheck(password, user.password, function(err, match) {
             if (err) throw err;
+            console.log(err)
             if (match) {
                 const token = jwt.sign(user.toJSON(), "secret", { expiresIn: 86400 });
                 res.json({
@@ -52,6 +55,9 @@ router.post("/login", function(req, res) {
                         studentFlag: user.studentFlag
                     }
                 })
+            }else{
+                res.json({ state: false, msg: "Incorrect password" });
+                return false;
             }
         });
     })

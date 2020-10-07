@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   password: String;
   alert: boolean = false;
   hide = true;
+  Message="";
 
 
   constructor(private userService:UserService, private router:Router) { }
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
       } else {
         console.log(res)
         this.alert = true;
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
       }
     })
 

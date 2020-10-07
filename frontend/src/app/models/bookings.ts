@@ -5,6 +5,7 @@ export class Bookings {
     endtime: String;
     studentid: String;
     teacherid: String;
+    subject:String;
     status: String;
     color:String;
 }

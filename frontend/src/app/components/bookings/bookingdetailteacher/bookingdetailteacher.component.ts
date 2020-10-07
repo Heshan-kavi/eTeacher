@@ -72,7 +72,6 @@ export class BookingdetailteacherComponent implements OnInit {
       status: "cancel"
     }
     this.bookingService.updateBooking(cancel).subscribe(res => {
-      console.log(res)
     })
     location.reload()
   }

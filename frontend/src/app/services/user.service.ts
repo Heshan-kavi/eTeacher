@@ -65,3 +65,4 @@ export class UserService {
     return this.http.put('http://localhost:3000/user/updatepassword' + user.email, user, { headers: headers })
   }
 }
+

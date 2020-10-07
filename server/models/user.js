@@ -1,4 +1,10 @@
 const mongoose = require('mongoose')
+
+/**
+ * Data model for User.
+ */
+
+
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer')
 const crypto =require('crypto')
@@ -9,6 +15,8 @@ const userSchema = new schema({
     username: { type: String, require: true },
     email: { type: String, require: true },
     password: { type: String, require: true },
+    teacherFlag:Boolean,
+    studentFlag:Boolean,
     teacherFlag:{ type:Boolean,require:true},
     studentFlag:{type:Boolean,require:true}
 
@@ -62,7 +70,7 @@ module.exports.passwordCheck = function(plainpassword, hash, callback) {
         if (res) {
             callback(null, res);
         }
-        console.log(err)
+        
     });
 
 }

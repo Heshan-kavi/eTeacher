@@ -21,9 +21,6 @@
                 </h1>
             </div>
         </div>
-        <div *ngIf="user">
-            <div>{{ user.name }}</div>
-        </div>
 
         <div class="col-sm-9" style="border: 2px solid gray; padding: 10px;border-radius: 15px">
             <ngb-tabset [destroyOnHide]="false" activeIds="ngb-tab-1" type="pills" (selectChange)="onSelectChange($event)">
@@ -71,7 +68,7 @@
                             <ng-container *ngFor="
                             let booking of pen
                             | paginate: { itemsPerPage: 10, currentPage: penpage }">
-                                <tr >
+                                <tr>
                                     <td>{{ booking.date }}</td>
                                     <td>{{ booking.start | date: "shortTime" }}</td>
                                     <td>{{ booking.subject }}</td>

@@ -22,7 +22,7 @@ import { ForumTypeComponent } from './Pages/testingpagetwo/forum-type/forum-type
 const routes: Routes =[
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home',             component: ComponentsComponent},
-    { path: 'scheduler',        component: SchedulerComponent },
+    // { path: 'scheduler',        component: SchedulerComponent },
     { path: 'profile',     component: ProfileComponent },
     { path: 'newbooking',     component: NewbookingComponent },
     { path: 'teacherbooking',     component: TeacherbookingsComponent },
@@ -38,7 +38,8 @@ const routes: Routes =[
     { path: 'forum',      component: TestingpagetwoComponent },
     { path: 'forum/:id',      component: ViewThreadComponent },
     { path: ':type' , component:ForumTypeComponent},
-    { path: ':type/:id', component: ViewThreadComponent}
+    { path: ':type/:id', component: ViewThreadComponent},
+
 
 ];
 
