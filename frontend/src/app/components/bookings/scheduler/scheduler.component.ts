@@ -19,6 +19,7 @@ import { Bookings } from '../../../models/bookings'
 export class SchedulerComponent {
   @Input() booking: Bookings;
   @Input() teacher:any;
+  @Input() subjecct:String;
   bookings: Array<Bookings>;
   showModal: boolean;
   bookingModal = false;
@@ -168,7 +169,7 @@ export class SchedulerComponent {
           start: da,
           endtime: date2,
           subject:"Maths",
-          studentid: this.user.name,    //user.id
+          studentid: this.user.name,    
           teacherid: 'kasun',     //parameter value
           status: 'pending',
 

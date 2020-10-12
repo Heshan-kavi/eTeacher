@@ -9,7 +9,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">User Booking</h4>
+          <h4 class="modal-title">Teacher Booking</h4>
           <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
         </div>
 
@@ -26,6 +26,10 @@
                 [ngModel]="booking.start | date :'shortTime'" (ngModelChange)="booking.start = $event" readonly>
             </div>
             <div class="form-group">
+              <input type="input" class="form-control" name="subject" required placeholder="subject"
+                [(ngModel)]="booking.subject" readonly>
+            </div>
+            <div class="form-group">
               <input type="input" class="form-control" name="studentid" required placeholder="student id"
                 [(ngModel)]="booking.studentid" readonly>
             </div>
@@ -35,11 +39,13 @@
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-info" data-dismiss="modal" >Message</button>
-          <div *ngIf="booking.status!='confirm'">
-            <button type="button" (click)="confirmBooking(booking)" class="btn btn-info">Confirm</button>
-            <button type="button" (click)="CancelBookingEvent(booking)" class="btn btn-warning">Cancel</button>
+          <div *ngIf="booking.status!='confirm' && booking.status!='cancel' && booking.status!='completed' && booking.date>=today">
+            <button type="button" (click)="confirmBookingEvent(booking)" class="btn btn-info">Confirm</button>
+            <button type="button" (click)="cancelBookingEvent(booking)" class="btn btn-warning">Cancel</button>
           </div>
-          
+          <div *ngIf="booking.status!='pending' && booking.status!='cancel' && booking.status!='completed' && booking.date>=today">
+            <button type="button" (click)="completeBookingEvent(booking)" class="btn btn-info">Mark As Completed</button>
+          </div>
           <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>
         </div>
 
@@ -49,7 +55,7 @@
 </div>
 
 
-  <div class="modal" id="deleteModal" [style.display]="showCancelModal ? 'block' : 'none'" >
+  <div class="modal" id="cancelModal" [style.display]="showCancelModal ? 'block' : 'none'" >
     <div class="modal-dialog" >
       <div class="modal-content">
 
@@ -68,6 +74,56 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="cancelBooking(booking)">Yes</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideCancel()">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="confirmModal" [style.display]="showConfirmModal ? 'block' : 'none'" >
+    <div class="modal-dialog" >
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm Booking</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="hideConfirm()">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" style="background-color: rgb(253, 196, 186);">
+          <h4>You want to Confirm this Booking</h4>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="confirmBooking(booking)">Yes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideConfirm()">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="completeModal" [style.display]="showCompleteModal ? 'block' : 'none'" >
+    <div class="modal-dialog" >
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Mark As Completed</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="hideComplete()">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" style="background-color: rgb(253, 196, 186);">
+          <h4>You want to Mark as Completed this Booking</h4>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="completeBooking(booking)">Yes</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideComplete()">Close</button>
         </div>
 
       </div>

@@ -27,10 +27,13 @@ export class TeacherbookingsComponent implements OnInit {
   
   conpage: number
   penpage: number
+  pastpage:number
   con:any
-  pen:any;
+  pen:any
+  past:any
   confirmsize: number = 0;
   pendingsize: number = 0;
+  pastsize:number=0;
   calendarVisible = true;
   calendarWeekends = true;
   calendarEvents: EventInput[]
@@ -43,25 +46,33 @@ export class TeacherbookingsComponent implements OnInit {
     const teacherId=this.user.name     //user.id
     this.conpage = 1
     this.penpage = 1
+    this.pastpage=1
     this.con = []
     this.pen = []
+    this.past=[]
     this.bookingService.getBookingbyteacherId(teacherId).subscribe(res => {
       for (var i in res) {
         this.bookings.push(res[i])
       }
       var j;
       for (j = 0; j < this.bookings.length; j++) {
-        if (this.bookings[j].status == "pending") {
-          this.bookings[j].color = '#6180fa'
-          this.pendingsize += 1;
-          this.pen.push(this.bookings[j]);
-          
-
-        } else if (this.bookings[j].status == "confirm") {
-          this.bookings[j].color = '#ffee52'
-          this.confirmsize += 1;
-          this.con.push(this.bookings[j]);
+        if(this.bookings[j].date<date1 || this.bookings[j].status == "completed") {
+          this.past.push(this.bookings[j]);
+          this.pastsize+=1;
+        } else{
+          if (this.bookings[j].status == "pending") {
+            this.bookings[j].color = '#6180fa'
+            this.pendingsize += 1;
+            this.pen.push(this.bookings[j]);
+            
+  
+          } else if (this.bookings[j].status == "confirm") {
+            this.bookings[j].color = '#ffee52'
+            this.confirmsize += 1;
+            this.con.push(this.bookings[j]);
+          }
         }
+        
         this.calendarEvents=res
       }
     })

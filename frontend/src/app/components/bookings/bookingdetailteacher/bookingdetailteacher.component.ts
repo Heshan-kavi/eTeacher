@@ -12,11 +12,14 @@ import { BookingService } from 'app/services/booking.service';
 export class BookingdetailteacherComponent implements OnInit {
   @Input() booking: Bookings;
   showViewModal: boolean;
+  showConfirmModal:boolean=false;
+  showCompleteModal:boolean=false;
   showCancelModal:boolean=false;
   editTitle: boolean = false;
   updateBookingEvent = new EventEmitter();
   messege:String=""
- 
+  date1 = JSON.stringify(new Date)
+  today = this.date1.slice(1, 11)
 
 
   constructor(private bookingService: BookingService) { }
@@ -36,13 +39,16 @@ export class BookingdetailteacherComponent implements OnInit {
     this.editTitle = true;
   }
 
+  confirmBookingEvent(booking) {
+    this.showConfirmModal=true;
+  }
   confirmBooking(booking) {
     const confirm = {
       _id:booking._id,
       date: booking.date,
       start: booking.start,
       endtime: booking.endtime,
-      //subject:booking.subject,
+      subject:booking.subject,
       studentid: booking.studentid,
       teacherid: booking.teacherid,
       status: "confirm" 
@@ -54,8 +60,29 @@ export class BookingdetailteacherComponent implements OnInit {
     this.showViewModal = false;
   }
 
-  CancelBookingEvent(booking) {
+  completeBookingEvent(booking) {
+    this.showCompleteModal=true;
+  }
 
+  completeBooking(booking) {
+    const completed = {
+      _id:booking._id,
+      date: booking.date,
+      start: booking.start,
+      endtime: booking.endtime,
+      subject:booking.subject,
+      studentid: booking.studentid,
+      teacherid: booking.teacherid,
+      status: "completed" 
+    }
+    this.bookingService.updateBooking(completed).subscribe(res => {
+    })
+    
+    location.reload()
+    this.showViewModal = false;
+  }
+
+  cancelBookingEvent(booking) {
     this.showCancelModal=true;
   }
 
@@ -66,7 +93,7 @@ export class BookingdetailteacherComponent implements OnInit {
       date: booking.date,
       start: booking.start,
       endtime: booking.endtime,
-      //subject:booking.subject,
+      subject:booking.subject,
       studentid: booking.studentid,
       teacherid: booking.teacherid,
       status: "cancel"
@@ -79,6 +106,12 @@ export class BookingdetailteacherComponent implements OnInit {
   hide() {
     this.messege ="Warning";
     this.showViewModal = false;
+  }
+  hideComplete() {
+    this.showCompleteModal=false;
+  }
+  hideConfirm() {
+    this.showConfirmModal=false;
   }
   hideCancel() {
     this.showCancelModal=false;

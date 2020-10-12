@@ -23,10 +23,13 @@ export class UserbookingsComponent implements OnInit {
 
   conpage:number
   penpage:number
+  pastpage:number
   con:any;
   pen:any;
+  past:any;
   confirmsize:number=0;
   pendingsize:number=0;
+  pastsize:number=0;
   showModal: boolean;
   today=new Date;
   bookingcount:number;
@@ -45,23 +48,30 @@ export class UserbookingsComponent implements OnInit {
 
     this.conpage=1 
     this.penpage=1
+    this.pastpage=1
     this.con=[]
     this.pen=[]
+    this.past=[]
     this.bookingService.getBookingbystudentId(studentId).subscribe(res => {       //call booking sevice andget bookings of student
       
       this.bookings=res
       var i;
-      for (i = 0; i < this.bookings.length; i++) {            //divide bookings accoiding to states and store seperae arrayss
-        if (this.bookings[i].status == "pending") {
-          this.bookings[i].color = '#6180fa'
-          this.pendingsize += 1;
-          this.pen.push(this.bookings[i]);
-
-        } else if (this.bookings[i].status == "confirm") {
-          this.bookings[i].color = '#ffee52'
-          this.confirmsize+=1;
-          this.con.push(this.bookings[i]);
-        }
+      for (i = 0; i < this.bookings.length; i++) { 
+        if(this.bookings[i].date<date1) {
+          this.past.push(this.bookings[i]);
+          this.pastsize+=1;
+        } else{
+          if (this.bookings[i].status == "pending") {
+            this.bookings[i].color = '#6180fa'
+            this.pendingsize += 1;
+            this.pen.push(this.bookings[i]);
+  
+          } else if (this.bookings[i].status == "confirm") {
+            this.bookings[i].color = '#ffee52'
+            this.confirmsize+=1;
+            this.con.push(this.bookings[i]);
+          }
+        }         //divide bookings accoiding to states and store seperae arrayss
         this.calendarEvents = res
       }
       
@@ -80,7 +90,6 @@ export class UserbookingsComponent implements OnInit {
         }
       }
     })
-
 
   }
   updateBookingEvent(id){

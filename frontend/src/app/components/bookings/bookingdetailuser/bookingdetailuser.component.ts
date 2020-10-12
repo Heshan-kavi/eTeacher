@@ -31,7 +31,8 @@ export class BookingdetailuserComponent implements OnInit {
   calendarEvents: EventInput[] = [
     { title: 'Event Now', start: new Date(), end: new Date, studentid: 'user', teacherid: 'teacher' }
   ];
-
+  date1 = JSON.stringify(new Date)
+  today = this.date1.slice(1, 11)
 
   constructor(private bookingService: BookingService) { }
   @ViewChild('calendar', { static: false }) calendarComponent: FullCalendarComponent; // the #calendar in the template  
@@ -42,7 +43,6 @@ export class BookingdetailuserComponent implements OnInit {
  
 
   ngOnInit(): void {
-    console.log(this.booking);
     this.showViewModal = true
 
     this.bookingService.getBookings().subscribe(res => {

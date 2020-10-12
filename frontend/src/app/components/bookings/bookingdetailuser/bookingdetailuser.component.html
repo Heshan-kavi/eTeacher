@@ -38,9 +38,9 @@
         </div>
 
         <!-- Modal footer -->
-        <div class="modal-footer">
+        <div claooter">
           <button type="button" class="btn btn-info" data-dismiss="modal" >Message</button>
-          <div *ngIf="booking.status=='pending'">
+          <div *ngIf="booking.status=='pending' && booking.date >= today">
             <button type="button" (click)="updateBookingEvent(booking)" class="btn btn-info">Update</button>
           </div>
           <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>

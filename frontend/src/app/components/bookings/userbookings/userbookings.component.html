@@ -85,6 +85,47 @@
                         </ngb-pagination>
                     </ng-template>
                 </ngb-tab>
+
+                <ngb-tab title="Past Bookings">
+                    <ng-template ngbTabContent style="border-radius: 15px">
+                      <table
+                        class="table table-striped table-light"
+                        style="border-radius: 15px; margin-top: 50px; color: black"
+                      >
+                        <tr>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                        <ng-container
+                          *ngFor="
+                            let booking of past
+                              | paginate: { itemsPerPage: 10, currentPage: pastpage }
+                          "
+                        >
+                          <tr>
+                            <td>{{ booking.date }}</td>
+                            <td>{{ booking.start | date: "shortTime" }}</td>
+                            <td>{{ booking.status }}</td>
+                            <td>
+                              <button class="btn btn-info" (click)="onSelect(booking)">
+                                View
+                              </button>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                      <ngb-pagination
+                        [collectionSize]="pastsize"
+                        [(page)]="pastpage"
+                        aria-label="Default pagination"
+                        [pageSize]="10"
+                      >
+                      </ngb-pagination>
+                    </ng-template>
+                  </ngb-tab>
+
                 <ngb-tab title="Calendar">
                     <ng-template ngbTabContent style="border-radius: 15px ;">
                         <div style="border-radius: 15px ; margin-top:50px">
